@@ -6,6 +6,7 @@ import javafx.util.Pair;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
@@ -67,7 +68,7 @@ public class Calculate extends Controller {
 
     }
 
-    public void createAdjList() throws IOException {
+    public LinkedHashMap<String,Double> createEdges() throws IOException {
         String path = adjFilePath();
 
 
@@ -92,6 +93,7 @@ public class Calculate extends Controller {
         ArrayList nodeList = nodePoints();
         double length = 0,x1=0,x2=0,y1=0,y2=0;
         Point point;
+        LinkedHashMap<String,Double> edgeValues = null;
 
         //cycles through the text file
         while ((line = reader.readLine()) != null) {
@@ -116,12 +118,12 @@ public class Calculate extends Controller {
                 //creates the length between values which is the cost
                 length = Math.sqrt(Math.pow((x2 - x1), 2.0) + Math.pow((y2 - y1), 2.0));
                 //creates a string value pair of the points and cost
+                edgeValues.put(String.valueOf(start)+" "+String.valueOf(end)+" - "+String.valueOf(end)+" "+String.valueOf(start), length);
 
-
-
-                taLog.appendText("The edge of " + String.valueOf(start) +String.valueOf(end)+" is "+ "\n");
+                taLog.appendText("The edge of " + String.valueOf(start) +String.valueOf(end)+" is "+ String.valueOf(length)+"\n");
             }
         }
+        return edgeValues;
 
     }
 
